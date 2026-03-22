@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 const t = {
   en: {
-    badge: "PhD Intern Assessment 2026",
+    badge: "Intern Assessment 2026",
     hero: "Vibe Coding Assessment",
     heroSub: "Build real projects with AI-driven development. Show your engineering skills, research creativity, and design taste.",
     warmup: "Warm-up",
@@ -22,7 +22,7 @@ const t = {
     tracks: "Tracks",
   },
   zh: {
-    badge: "博士实习生考核 2026",
+    badge: "实习生考核 2026",
     hero: "Vibe Coding 考核",
     heroSub: "用 AI 驱动的方式构建真实项目。展示你的工程能力、科研创造力和设计品味。",
     warmup: "热身题",

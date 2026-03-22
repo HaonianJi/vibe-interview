@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "VibeInterview — Coding Assessment",
-  description: "PhD intern vibe coding assessment platform",
+  description: "Intern vibe coding assessment platform",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -34,7 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </header>
         <main className="flex-1">{children}</main>
         <footer className="border-t border-[var(--border)] py-8 mt-16 text-center text-xs text-[var(--text-tertiary)]">
-          VibeInterview &middot; PhD Intern Assessment
+          VibeInterview &middot; Intern Assessment
         </footer>
       </body>
     </html>

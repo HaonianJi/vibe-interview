@@ -2,14 +2,14 @@
 title: "Research Field Navigator"
 difficulty: "hard"
 duration: "6-8 hours"
-description: "Build a comprehensive research intelligence platform for your PhD research field — from data collection to research proposals"
+description: "Build a comprehensive research intelligence platform for your research field — from data collection to research proposals"
 ---
 
 # Research Field Navigator
 
 Build a **Research Field Navigator**: a comprehensive research intelligence platform that takes a research field as input and produces a complete scientific landscape analysis — from paper collection, citation mapping, trend analysis, debate synthesis, to research proposal generation.
 
-**You must use your own PhD research field as the input. All outputs must be grounded in your real research direction.**
+**You must use your own research field as the input. All outputs must be grounded in your real research direction.**
 
 ---
 
