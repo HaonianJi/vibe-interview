@@ -799,8 +799,11 @@ function toggleRubric(btn) {
   btn.classList.toggle('open');
   btn.nextElementSibling.classList.toggle('show');
 }
-function handleRegister(e) {
+const WORKER_URL = '';
+async function handleRegister(e) {
   e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.textContent = 'Submitting...';
   const data = {
     name: document.getElementById('regName').value,
     email: document.getElementById('regEmail').value,
@@ -809,10 +812,13 @@ function handleRegister(e) {
     github: document.getElementById('regGithub').value,
     time: new Date().toISOString()
   };
-  // Store locally (admin can export via console: JSON.parse(localStorage.getItem('registrations')))
   const list = JSON.parse(localStorage.getItem('registrations') || '[]');
   list.push(data);
   localStorage.setItem('registrations', JSON.stringify(list));
+  if (WORKER_URL) {
+    try { await fetch(WORKER_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) }); }
+    catch (err) { console.warn('Worker unreachable:', err); }
+  }
   document.getElementById('registerForm').style.display = 'none';
   document.getElementById('registerSuccess').classList.add('show');
 }
