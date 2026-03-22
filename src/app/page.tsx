@@ -7,26 +7,36 @@ const t = {
   en: {
     hero: "Vibe Coding Assessment",
     heroSub: "Build real projects with AI-driven development. Show your engineering skills, research creativity, and design taste.",
-    basic: "Basic Questions",
-    basicDesc: "60 min each",
-    advanced: "Comprehensive Challenge",
-    advancedDesc: "6-8 hours",
-    view: "View",
+    warmup: "Warm-up Questions",
+    warmupDesc: "Pick one to practice before the main challenge. 60 min each.",
+    main: "Main Assessment",
+    mainDesc: "The comprehensive challenge — your primary evaluation.",
+    view: "View Details",
     langSwitch: "中文",
     langHref: "/?lang=zh",
-    count: "questions",
+    track1: "Quick Track",
+    track1Desc: "Choose 1 warm-up question to complete in 60 minutes",
+    track2: "Full Track",
+    track2Desc: "Complete the Research Field Navigator (6-8 hours)",
+    tracks: "Assessment Tracks",
+    tracksDesc: "Choose your track based on the assessment arrangement",
   },
   zh: {
     hero: "Vibe Coding 考核",
     heroSub: "用 AI 驱动的方式构建真实项目。展示你的工程能力、科研创造力和设计品味。",
-    basic: "基础题",
-    basicDesc: "每题 60 分钟",
-    advanced: "综合考核",
-    advancedDesc: "6-8 小时",
-    view: "查看",
+    warmup: "热身题",
+    warmupDesc: "在正式考核前选一道练练手，每题 60 分钟。",
+    main: "正式考核",
+    mainDesc: "综合挑战——核心评估环节。",
+    view: "查看详情",
     langSwitch: "English",
     langHref: "/?lang=en",
-    count: "道题目",
+    track1: "快速赛道",
+    track1Desc: "选 1 道热身题，60 分钟完成",
+    track2: "完整赛道",
+    track2Desc: "完成 Research Field Navigator（6-8 小时）",
+    tracks: "考核赛道",
+    tracksDesc: "根据考核安排选择你的赛道",
   },
 };
 
@@ -40,8 +50,8 @@ export default async function HomePage({
   const i = t[lang];
   const questions = getAllQuestions(lang);
 
-  const basic = questions.filter((q) => q.id !== "16-research-field-navigator");
-  const advanced = questions.filter((q) => q.id === "16-research-field-navigator");
+  const warmup = questions.filter((q) => q.id !== "16-research-field-navigator");
+  const main = questions.filter((q) => q.id === "16-research-field-navigator");
 
   return (
     <>
@@ -56,9 +66,6 @@ export default async function HomePage({
             {i.heroSub}
           </p>
           <div className="mt-6 flex items-center justify-center gap-3">
-            <span className="text-xs text-[var(--text-tertiary)] bg-[var(--bg-elevated)] border border-[var(--border)] rounded-full px-3 py-1">
-              {questions.length} {i.count}
-            </span>
             <Link href={i.langHref} className="text-xs text-[var(--accent)] hover:underline no-underline font-medium">
               {i.langSwitch}
             </Link>
@@ -67,15 +74,33 @@ export default async function HomePage({
       </div>
 
       <div className="site-container pb-12">
-        {/* Advanced */}
-        {advanced.length > 0 && (
-          <section className="mb-10">
-            <div className="flex items-center gap-2 mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] inline-block" />
-              <h2 className="text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide">{i.advanced}</h2>
-              <span className="text-xs text-[var(--text-tertiary)]">{i.advancedDesc}</span>
+        {/* Tracks overview */}
+        <section className="mb-10">
+          <div className="flex items-center gap-2 mb-2">
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide">{i.tracks}</h2>
+          </div>
+          <p className="text-xs text-[var(--text-tertiary)] mb-4">{i.tracksDesc}</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="card p-5 border-l-[3px] border-l-blue-400">
+              <div className="text-sm font-semibold text-[var(--text-primary)] mb-1">{i.track1}</div>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{i.track1Desc}</p>
             </div>
-            {advanced.map((q) => (
+            <div className="card p-5 border-l-[3px] border-l-[var(--accent)]">
+              <div className="text-sm font-semibold text-[var(--text-primary)] mb-1">{i.track2}</div>
+              <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{i.track2Desc}</p>
+            </div>
+          </div>
+        </section>
+
+        {/* Main Assessment */}
+        {main.length > 0 && (
+          <section className="mb-10">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] inline-block" />
+              <h2 className="text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide">{i.main}</h2>
+            </div>
+            <p className="text-xs text-[var(--text-tertiary)] mb-4">{i.mainDesc}</p>
+            {main.map((q) => (
               <Link
                 key={q.id}
                 href={`/questions/${q.id}?lang=${lang}`}
@@ -96,15 +121,15 @@ export default async function HomePage({
           </section>
         )}
 
-        {/* Basic */}
+        {/* Warm-up */}
         <section>
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-2">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-500 inline-block" />
-            <h2 className="text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide">{i.basic}</h2>
-            <span className="text-xs text-[var(--text-tertiary)]">{i.basicDesc}</span>
+            <h2 className="text-sm font-semibold text-[var(--text-primary)] uppercase tracking-wide">{i.warmup}</h2>
           </div>
+          <p className="text-xs text-[var(--text-tertiary)] mb-4">{i.warmupDesc}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {basic.map((q) => (
+            {warmup.map((q) => (
               <Link
                 key={q.id}
                 href={`/questions/${q.id}?lang=${lang}`}
