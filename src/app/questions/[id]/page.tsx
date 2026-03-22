@@ -64,7 +64,39 @@ export default async function QuestionDetailPage({
 }
 
 function markdownToHtml(md: string): string {
-  return md
+  // Split into blocks to handle tables separately
+  const lines = md.split('\n');
+  const blocks: string[] = [];
+  let i = 0;
+
+  while (i < lines.length) {
+    // Detect table: line with | and next line is separator |---|
+    if (lines[i]?.includes('|') && lines[i + 1]?.match(/^\|[\s-|]+\|$/)) {
+      const headerCells = lines[i].split('|').filter(c => c.trim()).map(c => c.trim());
+      i += 2; // skip header + separator
+      const rows: string[][] = [];
+      while (i < lines.length && lines[i]?.includes('|')) {
+        rows.push(lines[i].split('|').filter(c => c.trim()).map(c => c.trim()));
+        i++;
+      }
+      let table = '<div class="table-wrap"><table><thead><tr>';
+      headerCells.forEach(c => { table += `<th>${c}</th>`; });
+      table += '</tr></thead><tbody>';
+      rows.forEach(row => {
+        table += '<tr>';
+        row.forEach(c => { table += `<td>${c}</td>`; });
+        table += '</tr>';
+      });
+      table += '</tbody></table></div>';
+      blocks.push(table);
+    } else {
+      blocks.push(lines[i]);
+      i++;
+    }
+  }
+
+  return blocks.join('\n')
+    .replace(/^---$/gm, '<hr class="my-6 border-[var(--border-light)]">')
     .replace(/^### (.+)$/gm, '<h3>$1</h3>')
     .replace(/^## (.+)$/gm, '<h2>$1</h2>')
     .replace(/^# (.+)$/gm, '<h1>$1</h1>')
