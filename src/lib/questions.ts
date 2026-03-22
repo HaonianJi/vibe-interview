@@ -11,12 +11,19 @@ export interface Question {
   content: string;
 }
 
-const QUESTIONS_DIR = path.join(process.cwd(), "questions");
+const BASE_DIR = path.join(process.cwd(), "questions");
 
-export function getAllQuestions(): Question[] {
-  const files = fs.readdirSync(QUESTIONS_DIR).filter((f) => f.endsWith(".md"));
+function questionsDir(lang: string): string {
+  if (lang === "zh") return path.join(BASE_DIR, "zh");
+  return BASE_DIR;
+}
+
+export function getAllQuestions(lang: string = "en"): Question[] {
+  const dir = questionsDir(lang);
+  if (!fs.existsSync(dir)) return getAllQuestions("en");
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith(".md"));
   return files.map((file) => {
-    const raw = fs.readFileSync(path.join(QUESTIONS_DIR, file), "utf-8");
+    const raw = fs.readFileSync(path.join(dir, file), "utf-8");
     const { data, content } = matter(raw);
     return {
       id: file.replace(".md", ""),
@@ -29,9 +36,16 @@ export function getAllQuestions(): Question[] {
   });
 }
 
-export function getQuestion(id: string): Question | null {
-  const filePath = path.join(QUESTIONS_DIR, `${id}.md`);
-  if (!fs.existsSync(filePath)) return null;
+export function getQuestion(id: string, lang: string = "en"): Question | null {
+  const filePath = path.join(questionsDir(lang), `${id}.md`);
+  if (!fs.existsSync(filePath)) {
+    // fallback to English
+    const enPath = path.join(BASE_DIR, `${id}.md`);
+    if (!fs.existsSync(enPath)) return null;
+    const raw = fs.readFileSync(enPath, "utf-8");
+    const { data, content } = matter(raw);
+    return { id, title: data.title || id, difficulty: data.difficulty || "medium", duration: data.duration || "60 min", description: data.description || "", content };
+  }
   const raw = fs.readFileSync(filePath, "utf-8");
   const { data, content } = matter(raw);
   return {
@@ -45,7 +59,7 @@ export function getQuestion(id: string): Question | null {
 }
 
 export function getRandomQuestion(excludeIds: string[] = []): Question {
-  const all = getAllQuestions().filter((q) => !excludeIds.includes(q.id));
-  if (all.length === 0) return getAllQuestions()[0];
+  const all = getAllQuestions("en").filter((q) => !excludeIds.includes(q.id));
+  if (all.length === 0) return getAllQuestions("en")[0];
   return all[Math.floor(Math.random() * all.length)];
 }
