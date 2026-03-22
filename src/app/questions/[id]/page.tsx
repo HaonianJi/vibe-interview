@@ -59,6 +59,62 @@ export default async function QuestionDetailPage({
           />
         </div>
       </div>
+
+      {/* Submission Guide */}
+      <div className="card p-5 sm:p-8 mt-4">
+        <h2 className="text-base font-semibold mb-4 flex items-center gap-2">
+          <span className="text-lg">📦</span>
+          {isZh ? "提交说明" : "Submission Guide"}
+        </h2>
+
+        <div className="space-y-3 text-sm text-[var(--text-secondary)]">
+          <div className="flex gap-3">
+            <span className="w-6 h-6 rounded-full bg-[var(--accent-light)] text-[var(--accent)] text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">1</span>
+            <div>
+              <p className="font-medium text-[var(--text-primary)]">{isZh ? "创建 GitHub 仓库" : "Create a GitHub Repository"}</p>
+              <p className="text-xs text-[var(--text-tertiary)] mt-0.5">{isZh ? "将你的代码推送到一个公开的 GitHub 仓库" : "Push your code to a public GitHub repository"}</p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <span className="w-6 h-6 rounded-full bg-[var(--accent-light)] text-[var(--accent)] text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
+            <div>
+              <p className="font-medium text-[var(--text-primary)]">{isZh ? "确保项目可运行" : "Ensure the Project Runs"}</p>
+              <p className="text-xs text-[var(--text-tertiary)] mt-0.5">{isZh ? "README 中写明启动步骤，确保他人能顺利运行" : "Include clear setup instructions in README so others can run it"}</p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <span className="w-6 h-6 rounded-full bg-[var(--accent-light)] text-[var(--accent)] text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
+            <div>
+              <p className="font-medium text-[var(--text-primary)]">{isZh ? "准备提交材料" : "Prepare Deliverables"}</p>
+              <p className="text-xs text-[var(--text-tertiary)] mt-0.5">
+                {isZh
+                  ? "代码仓库、截图或录屏、设计说明（200-300 字）"
+                  : "Code repository, screenshots or screen recording, design rationale (200-300 words)"}
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <span className="w-6 h-6 rounded-full bg-[var(--accent-light)] text-[var(--accent)] text-xs font-bold flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
+            <div>
+              <p className="font-medium text-[var(--text-primary)]">{isZh ? "提交" : "Submit"}</p>
+              <p className="text-xs text-[var(--text-tertiary)] mt-0.5">
+                {isZh
+                  ? "前往提交页面，填写信息并提交你的 GitHub 仓库链接"
+                  : "Go to the submission page, fill in your info and submit your GitHub repo link"}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <Link
+            href={`/submit?lang=${lang}`}
+            className="btn-primary no-underline text-sm inline-flex"
+          >
+            {isZh ? "前往提交 →" : "Go to Submit →"}
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }

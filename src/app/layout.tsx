@@ -27,6 +27,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/" className="px-3 py-1.5 rounded-md text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] no-underline text-[13px] font-medium transition-colors">
                 Questions
               </Link>
+              <Link href="/submit" className="px-3 py-1.5 rounded-md text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] no-underline text-[13px] font-medium transition-colors">
+                Submit
+              </Link>
               <NavAdmin />
             </nav>
           </div>
