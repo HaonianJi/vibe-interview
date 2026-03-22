@@ -4,28 +4,35 @@ import { NavAdmin } from "./nav-admin";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "VibeInterview — Coding Assessment Platform",
+  title: "VibeInterview — Coding Assessment",
   description: "PhD intern vibe coding assessment platform",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col bg-gray-50 text-gray-900 antialiased">
-        <header className="bg-white border-b border-gray-200">
-          <div className="max-w-5xl mx-auto px-6 flex items-center justify-between h-14">
-            <Link href="/" className="text-lg font-bold text-gray-900 no-underline">
-              Vibe<span className="text-blue-600">Interview</span>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+      </head>
+      <body className="min-h-screen flex flex-col">
+        <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-[var(--border)]">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between h-12">
+            <Link href="/" className="text-base font-bold text-[var(--text-primary)] no-underline tracking-tight">
+              Vibe<span className="text-[var(--accent)]">Interview</span>
             </Link>
-            <nav className="flex items-center gap-4 text-sm">
-              <Link href="/" className="text-gray-600 hover:text-gray-900 no-underline">Questions</Link>
+            <nav className="flex items-center gap-1 sm:gap-3 text-sm">
+              <Link href="/" className="px-3 py-1.5 rounded-md text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] no-underline text-[13px] font-medium transition-colors">
+                Questions
+              </Link>
               <NavAdmin />
             </nav>
           </div>
         </header>
-        <div className="flex-1">{children}</div>
-        <footer className="border-t border-gray-200 py-6 mt-12 text-center text-xs text-gray-400">
-          VibeInterview — PhD Intern Assessment
+        <main className="flex-1">{children}</main>
+        <footer className="border-t border-[var(--border)] py-8 mt-16 text-center text-xs text-[var(--text-tertiary)]">
+          VibeInterview &middot; PhD Intern Assessment
         </footer>
       </body>
     </html>

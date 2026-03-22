@@ -7,7 +7,6 @@ export function NavAdmin() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // Check if admin cookie exists (non-httpOnly check via API)
     fetch("/api/auth/check").then((r) => {
       if (r.ok) setIsAdmin(true);
     }).catch(() => {});
@@ -17,8 +16,18 @@ export function NavAdmin() {
 
   return (
     <>
-      <Link href="/admin" className="text-gray-600 hover:text-gray-900 no-underline">Admin</Link>
-      <Link href="/new" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium no-underline">+ New</Link>
+      <Link
+        href="/admin"
+        className="px-3 py-1.5 rounded-md text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-hover)] no-underline text-[13px] font-medium transition-colors"
+      >
+        Admin
+      </Link>
+      <Link
+        href="/new"
+        className="btn-primary no-underline text-[13px] ml-1"
+      >
+        + New
+      </Link>
     </>
   );
 }
