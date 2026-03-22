@@ -17,8 +17,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               Vibe<span className="text-blue-600">Interview</span>
             </Link>
             <nav className="flex items-center gap-4 text-sm">
-              <Link href="/questions" className="text-gray-600 hover:text-gray-900 no-underline">Questions</Link>
-              <Link href="/" className="text-gray-600 hover:text-gray-900 no-underline">Dashboard</Link>
+              <Link href="/" className="text-gray-600 hover:text-gray-900 no-underline">Questions</Link>
+              <Link href="/admin" className="text-gray-600 hover:text-gray-900 no-underline">Admin</Link>
               <Link href="/new" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium no-underline">+ New</Link>
             </nav>
           </div>
