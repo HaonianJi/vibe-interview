@@ -7,15 +7,23 @@ export const dynamic = "force-dynamic";
 export default async function DashboardPage() {
   const interviews = await prisma.interview.findMany({
     orderBy: { createdAt: "desc" },
-    include: { grade: true },
+    select: {
+      id: true,
+      candidateName: true,
+      candidateEmail: true,
+      questionId: true,
+      mode: true,
+      status: true,
+      repoUrl: true,
+      createdAt: true,
+    },
   });
 
   const statusBadge = (status: string) => {
     const cls: Record<string, string> = {
       pending: "bg-gray-100 text-gray-600",
       in_progress: "bg-blue-100 text-blue-700",
-      submitted: "bg-yellow-100 text-yellow-700",
-      graded: "bg-green-100 text-green-700",
+      submitted: "bg-green-100 text-green-700",
     };
     return cls[status] || "bg-gray-100 text-gray-600";
   };
@@ -59,7 +67,7 @@ export default async function DashboardPage() {
                   Status
                 </th>
                 <th className="text-center px-5 py-3 text-xs font-semibold text-gray-500 uppercase">
-                  Score
+                  Repo
                 </th>
                 <th className="text-right px-5 py-3 text-xs font-semibold text-gray-500 uppercase">
                   Created
@@ -99,10 +107,15 @@ export default async function DashboardPage() {
                       </span>
                     </td>
                     <td className="px-5 py-4 text-center">
-                      {iv.grade ? (
-                        <span className="text-lg font-bold text-blue-600">
-                          {iv.grade.totalScore.toFixed(1)}
-                        </span>
+                      {iv.repoUrl ? (
+                        <a
+                          href={iv.repoUrl.startsWith("http") ? iv.repoUrl : `https://github.com/${iv.repoUrl}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-blue-600 hover:underline text-sm"
+                        >
+                          View
+                        </a>
                       ) : (
                         <span className="text-gray-300">&mdash;</span>
                       )}

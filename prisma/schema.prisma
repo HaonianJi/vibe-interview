@@ -20,19 +20,4 @@ model Interview {
   startedAt       DateTime?
   submittedAt     DateTime?
   createdAt       DateTime  @default(now())
-  grade           Grade?
-}
-
-model Grade {
-  id                  String    @id @default(cuid())
-  interviewId         String    @unique
-  interview           Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
-  functionalityScore  Float
-  codeQualityScore    Float
-  productSenseScore   Float
-  techChoiceScore     Float
-  documentationScore  Float
-  totalScore          Float
-  detailedFeedback    String
-  gradedAt            DateTime  @default(now())
 }

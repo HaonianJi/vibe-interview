@@ -10,7 +10,6 @@ export async function GET(
 
   const interview = await prisma.interview.findUnique({
     where: { id },
-    include: { grade: true },
   });
 
   if (!interview) {

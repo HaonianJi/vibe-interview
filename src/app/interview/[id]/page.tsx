@@ -3,18 +3,6 @@
 import { useEffect, useState, useCallback, use } from "react";
 import Link from "next/link";
 
-interface Grade {
-  id: string;
-  functionalityScore: number;
-  codeQualityScore: number;
-  productSenseScore: number;
-  techChoiceScore: number;
-  documentationScore: number;
-  totalScore: number;
-  detailedFeedback: string;
-  gradedAt: string;
-}
-
 interface Interview {
   id: string;
   token: string;
@@ -28,7 +16,6 @@ interface Interview {
   startedAt: string | null;
   submittedAt: string | null;
   createdAt: string;
-  grade: Grade | null;
   question: {
     title: string;
     difficulty: string;
@@ -45,7 +32,6 @@ export default function InterviewDetailPage({
   const { id } = use(params);
   const [interview, setInterview] = useState<Interview | null>(null);
   const [loading, setLoading] = useState(true);
-  const [grading, setGrading] = useState(false);
   const [error, setError] = useState("");
   const [copied, setCopied] = useState(false);
 
@@ -65,26 +51,6 @@ export default function InterviewDetailPage({
   useEffect(() => {
     fetchInterview();
   }, [fetchInterview]);
-
-  async function handleGrade() {
-    if (!interview) return;
-    setGrading(true);
-    setError("");
-    try {
-      const res = await fetch(`/api/interviews/${interview.id}/grade`, {
-        method: "POST",
-      });
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Grading failed");
-      }
-      await fetchInterview();
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Grading failed");
-    } finally {
-      setGrading(false);
-    }
-  }
 
   function copyExamLink() {
     if (!interview) return;
@@ -114,38 +80,7 @@ export default function InterviewDetailPage({
     pending: "bg-gray-100 text-gray-600",
     in_progress: "bg-blue-100 text-blue-700",
     submitted: "bg-yellow-100 text-yellow-700",
-    graded: "bg-green-100 text-green-700",
   };
-
-  const dimensions = interview.grade
-    ? [
-        {
-          label: "Functionality",
-          score: interview.grade.functionalityScore,
-          weight: "35%",
-        },
-        {
-          label: "Code Quality",
-          score: interview.grade.codeQualityScore,
-          weight: "25%",
-        },
-        {
-          label: "Product Sense",
-          score: interview.grade.productSenseScore,
-          weight: "20%",
-        },
-        {
-          label: "Tech Choice",
-          score: interview.grade.techChoiceScore,
-          weight: "10%",
-        },
-        {
-          label: "Documentation",
-          score: interview.grade.documentationScore,
-          weight: "10%",
-        },
-      ]
-    : [];
 
   return (
     <div className="site-container py-10 max-w-3xl">
@@ -193,19 +128,10 @@ export default function InterviewDetailPage({
           </div>
         </div>
 
-        <div className="mt-4 flex gap-3">
+        <div className="mt-4">
           <button onClick={copyExamLink} className="btn-secondary text-sm">
             {copied ? "Copied!" : "Copy Exam Link"}
           </button>
-          {interview.status === "submitted" && !interview.grade && (
-            <button
-              onClick={handleGrade}
-              disabled={grading}
-              className="btn-primary text-sm"
-            >
-              {grading ? "Grading..." : "AI Grade"}
-            </button>
-          )}
         </div>
       </div>
 
@@ -227,7 +153,7 @@ export default function InterviewDetailPage({
 
       {/* Repo URL */}
       {interview.repoUrl && (
-        <div className="card p-6 mb-6">
+        <div className="card p-6">
           <h2 className="text-lg font-semibold mb-2">Submitted Repository</h2>
           <a
             href={
@@ -241,49 +167,11 @@ export default function InterviewDetailPage({
           >
             {interview.repoUrl}
           </a>
-        </div>
-      )}
-
-      {/* Grade Report */}
-      {interview.grade && (
-        <div className="card p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold">Grade Report</h2>
-            <span className="text-3xl font-bold text-blue-600">
-              {interview.grade.totalScore.toFixed(1)}
-              <span className="text-base text-gray-400 font-normal"> / 5</span>
-            </span>
-          </div>
-
-          <div className="space-y-4 mb-6">
-            {dimensions.map((dim) => (
-              <div key={dim.label}>
-                <div className="flex justify-between text-sm mb-1">
-                  <span className="font-medium text-gray-700">
-                    {dim.label}
-                  </span>
-                  <span className="text-gray-500">
-                    {dim.score}/5 ({dim.weight})
-                  </span>
-                </div>
-                <div className="w-full bg-gray-100 rounded-full h-2.5">
-                  <div
-                    className="bg-blue-600 h-2.5 rounded-full transition-all"
-                    style={{ width: `${(dim.score / 5) * 100}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="border-t border-gray-100 pt-4">
-            <h3 className="font-semibold text-sm text-gray-600 mb-2">
-              Detailed Feedback
-            </h3>
-            <pre className="whitespace-pre-wrap text-sm text-gray-700 leading-relaxed font-sans">
-              {interview.grade.detailedFeedback}
-            </pre>
-          </div>
+          {interview.submittedAt && (
+            <p className="text-xs text-gray-400 mt-2">
+              Submitted at {new Date(interview.submittedAt).toLocaleString()}
+            </p>
+          )}
         </div>
       )}
     </div>
