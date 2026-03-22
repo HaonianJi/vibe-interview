@@ -89,6 +89,15 @@ export async function PUT(
       );
     }
 
+    const githubRepoRegex =
+      /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+(\.git)?$/;
+    if (!githubRepoRegex.test(body.repoUrl)) {
+      return NextResponse.json(
+        { error: "repoUrl must be a valid GitHub repository URL" },
+        { status: 400 },
+      );
+    }
+
     const updated = await prisma.interview.update({
       where: { token },
       data: {

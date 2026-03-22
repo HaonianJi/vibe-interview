@@ -2,10 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { getQuestion } from "@/lib/questions";
 import { gradeSubmission } from "@/lib/grading";
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 import fs from "fs";
 import path from "path";
 import os from "os";
+
+const GITHUB_REPO_REGEX =
+  /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+(\.git)?$/;
 
 const CODE_EXTENSIONS = new Set([
   ".ts",
@@ -91,12 +94,20 @@ export async function POST(
   if (!question)
     return NextResponse.json({ error: "Question not found" }, { status: 400 });
 
+  if (!interview.repoUrl || !GITHUB_REPO_REGEX.test(interview.repoUrl)) {
+    return NextResponse.json(
+      { error: "Invalid GitHub repository URL" },
+      { status: 400 },
+    );
+  }
+
   const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "vibe-grade-"));
   try {
-    execSync(`gh repo clone ${interview.repoUrl} ${tmpDir}/repo -- --depth 1`, {
-      timeout: 30000,
-      stdio: "pipe",
-    });
+    execFileSync(
+      "git",
+      ["clone", "--depth", "1", interview.repoUrl, path.join(tmpDir, "repo")],
+      { timeout: 30000, stdio: "pipe" },
+    );
 
     const codeFiles = readCodeFiles(path.join(tmpDir, "repo"));
     if (codeFiles.length === 0) {
@@ -135,7 +146,7 @@ export async function POST(
     );
   } finally {
     try {
-      execSync(`rm -rf ${tmpDir}`);
+      fs.rmSync(tmpDir, { recursive: true, force: true });
     } catch {
       // ignore cleanup errors
     }
