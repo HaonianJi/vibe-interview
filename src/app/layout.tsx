@@ -17,8 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="min-h-screen flex flex-col">
-        <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-[var(--border)]">
-          <div className="max-w-5xl mx-auto px-4 sm:px-6 flex items-center justify-between h-12">
+        <header className="sticky top-0 z-50">
+          <div className="mx-auto mt-2 sm:mt-3 px-3 sm:px-6 max-w-5xl">
+          <div className="bg-white/80 backdrop-blur-xl border border-[var(--border)] rounded-full px-4 sm:px-6 flex items-center justify-between h-11 shadow-[var(--shadow-xs)]">
             <Link href="/" className="text-base font-bold text-[var(--text-primary)] no-underline tracking-tight">
               Vibe<span className="text-[var(--accent)]">Interview</span>
             </Link>
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </Link>
               <NavAdmin />
             </nav>
+          </div>
           </div>
         </header>
         <main className="flex-1">{children}</main>
