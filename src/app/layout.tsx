@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { NavAdmin } from "./nav-admin";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,8 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Link>
             <nav className="flex items-center gap-4 text-sm">
               <Link href="/" className="text-gray-600 hover:text-gray-900 no-underline">Questions</Link>
-              <Link href="/admin" className="text-gray-600 hover:text-gray-900 no-underline">Admin</Link>
-              <Link href="/new" className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-1.5 rounded-lg text-sm font-medium no-underline">+ New</Link>
+              <NavAdmin />
             </nav>
           </div>
         </header>
