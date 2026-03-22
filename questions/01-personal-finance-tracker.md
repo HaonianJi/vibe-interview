@@ -1,7 +1,7 @@
 ---
 title: "Personal Finance Tracker"
 difficulty: "medium"
-duration: "90 min"
+duration: "60 min"
 description: "Build a personal finance tracking app with transaction management and visualizations"
 ---
 

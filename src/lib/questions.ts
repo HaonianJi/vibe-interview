@@ -22,7 +22,7 @@ export function getAllQuestions(): Question[] {
       id: file.replace(".md", ""),
       title: data.title || file,
       difficulty: data.difficulty || "medium",
-      duration: data.duration || "90 min",
+      duration: data.duration || "60 min",
       description: data.description || "",
       content,
     };
@@ -38,7 +38,7 @@ export function getQuestion(id: string): Question | null {
     id,
     title: data.title || id,
     difficulty: data.difficulty || "medium",
-    duration: data.duration || "90 min",
+    duration: data.duration || "60 min",
     description: data.description || "",
     content,
   };

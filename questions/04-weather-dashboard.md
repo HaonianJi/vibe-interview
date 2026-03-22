@@ -1,7 +1,7 @@
 ---
 title: "Weather Dashboard"
 difficulty: "medium"
-duration: "90 min"
+duration: "60 min"
 description: "Build a weather dashboard with city search, forecasts, and data visualization"
 ---
 

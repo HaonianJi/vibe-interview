@@ -1,7 +1,7 @@
 ---
 title: "Real-Time Polling App"
 difficulty: "medium"
-duration: "90 min"
+duration: "60 min"
 description: "Build a polling app where users can create polls, vote, and see live results"
 ---
 

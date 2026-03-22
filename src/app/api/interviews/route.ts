@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
         candidateName,
         candidateEmail,
         mode: mode || "sync",
-        timeLimitMin: timeLimitMin || 90,
+        timeLimitMin: timeLimitMin || 60,
         questionId: question.id,
       },
     });

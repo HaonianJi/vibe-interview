@@ -1,7 +1,7 @@
 ---
 title: "Kanban Board"
 difficulty: "medium"
-duration: "90 min"
+duration: "60 min"
 description: "Build an interactive Kanban board with drag-and-drop and task management"
 ---
 

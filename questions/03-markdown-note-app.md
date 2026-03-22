@@ -1,7 +1,7 @@
 ---
 title: "Markdown Note-Taking App"
 difficulty: "medium"
-duration: "90 min"
+duration: "60 min"
 description: "Build a note-taking app with Markdown editing, preview, and organization"
 ---
 

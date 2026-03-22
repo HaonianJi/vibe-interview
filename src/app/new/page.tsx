@@ -8,7 +8,7 @@ export default function NewInterviewPage() {
   const [candidateName, setCandidateName] = useState("");
   const [candidateEmail, setCandidateEmail] = useState("");
   const [mode, setMode] = useState("sync");
-  const [timeLimitMin, setTimeLimitMin] = useState(90);
+  const [timeLimitMin, setTimeLimitMin] = useState(60);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
